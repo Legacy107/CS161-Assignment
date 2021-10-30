@@ -15,6 +15,7 @@ CS161 Final Assignment: Minesweeper Clone
 6. Receiving new position of the pointer (to select a cell) from console screen.
 7. Saving the current state of the board and loading in the next playing session.
 8. Saving high scores.
+
 **Advance features**
 - Using keyboard (arrow keys) to select a cell.
 - Rendering images.
