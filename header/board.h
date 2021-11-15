@@ -2,6 +2,7 @@
 #include <vector>
 #include <map>
 #include <iostream>
+#include <windows.h>
 
 // fill the board vector with 0
 // if seed is 0, generate a random seed

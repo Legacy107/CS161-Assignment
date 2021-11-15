@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <windows.h>
 #include "./header/board.h"
 #include "./header/input.h"
 
@@ -41,6 +42,7 @@ struct minesawyer
 
     void draw()
     {
+        system("clear");
         cout << "==========" << endl;
         cout << "Minesawyer" << endl;
         cout << "==========" << endl;
