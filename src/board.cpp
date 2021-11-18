@@ -6,6 +6,34 @@
 
 using namespace std;
 
+bool is_valid_cell(int x,int y, int width, int height)
+{
+    return 0 <= x && x < width && 0 <= y && y <= height;
+}
+
+void mass_open(int x, int y, int width, int height, std::vector<std::vector<int>> &board, std::vector<std::vector<int>> &mask)
+{
+    const int drow[4] = [-1, 0, 0, 1];
+    const int dcol[4] = [0, -1, 1, 0];
+
+    mask[y][x] = 1;
+
+    if (board[y][x])
+        return;
+
+    for (int i = 0; i < 4; i++)
+    {
+        int row = y + drow[i];
+        int col = x + dcol[i];
+        if (
+            is_valid_cell(col, row, width, height)
+            && board[row][col] != -1
+            && !mask[row][col]
+        )
+            mass_open(col, row, width, height, board, mask);
+    }
+}
+
 bool check_win(int flags, int mines, int width, int height, vector<vector<int>> &board, vector<vector<int>> &mask)
 {
     if (flags != mines)

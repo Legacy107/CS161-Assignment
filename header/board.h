@@ -14,11 +14,11 @@ void gen_board(std::vector<std::vector<int>> &board, int width, int height, int 
 // return true if board[x][y] has a mine
 // else if board[x][y] is 0, call mass_open() and return false
 // else set mask[x][y] to 1 and return false
-bool open_cell(int x, int y, std::vector<std::vector<int>> &board, std::vector<std::vector<int>> &mask);
+bool open_cell(int x, int y, int width, int height, std::vector<std::vector<int>> &board, std::vector<std::vector<int>> &mask);
 
 // open all blank cells that are adjacent to (x,y) and 1 outer layer of that area
 // set mask[x][y] to 1 to open it
-void mass_open(int x, int y, std::vector<std::vector<int>> &board, std::vector<std::vector<int>> &mask);
+void mass_open(int x, int y, int width, int height, std::vector<std::vector<int>> &board, std::vector<std::vector<int>> &mask);
 
 // set mask[x][y] to 0 to if the cell is already flagged
 // else set mask[x][y] to -1
