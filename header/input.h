@@ -1,5 +1,8 @@
 #pragma once
 #include <vector>
+#include <iostream>
+#include <sstream>
+#include <string.h>
 
 // output instruction: y to start or n to quit
 // get and validate input
@@ -11,6 +14,6 @@ bool start_input();
 // convert to numbers A->0 1->0
 // if of open type return {{0, 0}, 0}
 // if of flag type return {{0, 0}, 1}
-pair<pair<int, int>, bool> cell_input(int width, int height, vector<vector<int>> &mask);
+std::pair<std::pair<int, int>, bool> cell_input(int width, int height, std::vector<std::vector<int>> &mask);
 
 void input();
