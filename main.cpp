@@ -54,6 +54,8 @@ int main()
 {
     // Initialize
     minesawyer game(10, 10, 10);
+    if (!start_input())
+        return 0;
 
     // Main loop
     while (true)
