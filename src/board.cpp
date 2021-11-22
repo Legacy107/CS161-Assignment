@@ -2,94 +2,88 @@
 #include <vector>
 #include <ctime>
 #include <random>
-#include <algorithm> 
-using namespace std;
-short numberofmines_near(short x,short y,vector<vector<int>> &board,int width, int height)
+#include <algorithm>
+
+bool is_valid_cell(int x, int y, int width, int height)
 {
-   short count=0;
-   for(int i=y-1;i<=y+1;i++)
-   {
-         for(int j=x-1;j<=x+1;j++)
-         {
-             if(i<0 || i>=height || j<0 || j>= width)
-                continue;
-            else
-            {
-                   if(board[j][i]==-1)
-                {
-                   count++;
-                }
-            }
-         }
-   }
-   return count;
+    return 0 <= x && x < width && 0 <= y && y < height;
 }
-void gen_board(vector<vector<int>> &board, int width, int height, int mines, int seed = 0)
+
+int nearby_mines(int x, int y, int width, int height, std::vector<std::vector<int>> &board)
 {
-    // fill the board vector with 0
-    // if seed is 0, generate a random seed
-    // generate a vector<pair<int,int>> containing every cells
-    // use shuffle() to pick random cells that has mines
-    // for cells that don't has mines, count the number of mines around them
-    if(seed==0)
-      srand(time(0));
-    vector<pair<int,int>> cell;
-    for(int i=0;i < height;i++)
+    int count = 0;
+    for (int i = y - 1; i <= y + 1; i++)
     {
-        for(int j=0;j < width;j++ )
+        for (int j = x - 1; j <= x + 1; j++)
         {
-            cell.push_back({j,i});
+            if (is_valid_cell(j, i, width, height) && board[i][j] == -1)
+                count++;
         }
     }
-    random_shuffle(cell.begin(),cell.end());
-    for(int i=0; i < mines; i++)
+    return count;
+}
+
+void gen_board(std::vector<std::vector<int>> &board, int width, int height, int mines, int seed = 0)
+{
+    if (seed == 0)
+        srand(time(0));
+
+    std::vector<std::pair<int, int>> cells;
+    for (int i = 0; i < height; i++)
     {
-          board[cell[i].first][cell[i].second]=-1;
-    }
-    for(int i=0;i < height;i++ )
-    {
-        for(int j=0;j < width;j++ )
+        for (int j = 0; j < width; j++)
         {
-            if(i<0 || i>=height || j<0 || j>= width)
-                continue;
-            else
-            {
-                if(board[j][i]!=-1)
-               {
-                   board[j][i]= numberofmines_near(j,i,board,width,height);
-               }
-            }
+            cells.push_back({i, j});
         }
-        
     }
-}
-bool open_cell(int x, int y, vector<vector<int>> &board, vector<vector<int>> &mask)
-{
-    // return true if board[x][y] has a mine
-    // else if board[x][y] is 0, call mass_open() and return false
-    // else set mask[x][y] to 1 and return false
-    if(board[x][y]==-1)
-       return true;
-    else if(board[x][y]==0)
-       {
-           mass_open(x,y,board,mask);
-           return false;
-       }
-    else 
-       {
-           mask[x][y]==1;
-           return false;
-       }
-}
-void flag_cell(int x, int y, vector<vector<int>> &mask)
-{
-    // set mask[x][y] to 0 to if the cell is already flagged
-    // else set mask[x][y] to -1
-    if(mask[x][y]==-1)
+    random_shuffle(cells.begin(), cells.end());
+    for (int i = 0; i < mines; i++)
     {
-        mask[x][y]==0;
+        board[cells[i].first][cells[i].second] = -1;
     }
-    else{
-        mask[x][y]==-1;
+
+    for (int i = 0; i < height; i++)
+    {
+        for (int j = 0; j < width; j++)
+        {
+            if (board[i][j] != -1)
+                board[i][j] = nearby_mines(j, i, width, height, board);
+        }
+    }
+}
+
+bool open_cell(int x, int y, int width, int height, std::vector<std::vector<int>> &board, std::vector<std::vector<int>> &mask)
+{
+    if (board[y][x] == -1)
+        return true;
+    if (board[y][x] == 0)
+        mass_open(x, y, width, height, board, mask);
+    else
+        mask[y][x] == 1;
+    return false;
+}
+
+void flag_cell(int x, int y, std::vector<std::vector<int>> &mask)
+{
+    if (mask[y][x] == -1)
+        mask[y][x] == 0;
+    else
+        mask[y][x] == -1;
+}
+
+void board()
+{
+    std::vector<std::vector<int>> board = {
+        {0, 0, 0, 0},
+        {0, 0, 0, 0},
+        {0, 0, 0, 0},
+        {0, 0, 0, 0},
+    };
+    gen_board(board, 4, 4, 5);
+    for (int i = 0; i < board.size(); i++)
+    {
+        for (int j = 0; j < board[0].size(); j++)
+            std::cout << board[i][j] << " ";
+        std::cout << std::endl;
     }
 }
