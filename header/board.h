@@ -1,8 +1,9 @@
 #pragma once
 #include <vector>
-#include <map>
 #include <iostream>
 #include <windows.h>
+
+bool is_valid_cell(int x,int y, int width, int height);
 
 // fill the board vector with 0
 // if seed is 0, generate a random seed

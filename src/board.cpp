@@ -1,20 +1,19 @@
 #include "../header/board.h"
 #include <vector>
-#include <map>
 #include <iostream>
 #include <windows.h>
 
 using namespace std;
 
-bool is_valid_cell(int x,int y, int width, int height)
+bool is_valid_cell(int x, int y, int width, int height)
 {
-    return 0 <= x && x < width && 0 <= y && y <= height;
+    return 0 <= x && x < width && 0 <= y && y < height;
 }
 
 void mass_open(int x, int y, int width, int height, std::vector<std::vector<int>> &board, std::vector<std::vector<int>> &mask)
 {
-    const int drow[4] = [-1, 0, 0, 1];
-    const int dcol[4] = [0, -1, 1, 0];
+    const int drow[4] = {-1, 0, 0, 1};
+    const int dcol[4] = {0, -1, 1, 0};
 
     mask[y][x] = 1;
 
@@ -25,11 +24,7 @@ void mass_open(int x, int y, int width, int height, std::vector<std::vector<int>
     {
         int row = y + drow[i];
         int col = x + dcol[i];
-        if (
-            is_valid_cell(col, row, width, height)
-            && board[row][col] != -1
-            && !mask[row][col]
-        )
+        if (is_valid_cell(col, row, width, height) && board[row][col] != -1 && !mask[row][col])
             mass_open(col, row, width, height, board, mask);
     }
 }
