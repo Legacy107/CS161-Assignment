@@ -1,5 +1,8 @@
 #pragma once
 #include <vector>
+#include <iostream>
+#include <sstream>
+#include <string.h>
 
 // output instruction: y to start or n to quit
 // get and validate input
