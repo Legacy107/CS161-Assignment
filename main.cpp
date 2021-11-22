@@ -17,7 +17,14 @@ struct minesawyer
         this->width = width;
         this->height = height;
         this->mines = mines;
+
+        for (int i = 0; i < height; i++)
+        {
+            vector<int> board_row(width);
+            board.push_back(board_row);
+        }
         gen_board(board, width, height, mines);
+
         for (int i = 0; i < height; i++)
         {
             vector<int> mask_row(width);
@@ -32,17 +39,19 @@ struct minesawyer
 
     void handleWin()
     {
-        cout << "You win";
+        draw();
+        cout << "You win" << endl;
     }
 
     void handleLose()
     {
-        cout << "You lose";
+        draw();
+        cout << "You lose" << endl;
     }
 
     void draw()
     {
-        system("clear");
+        system("cls");
         cout << "==========" << endl;
         cout << "Minesawyer" << endl;
         cout << "==========" << endl;
@@ -53,6 +62,7 @@ struct minesawyer
 int main()
 {
     // Initialize
+    system("cls");
     minesawyer game(10, 10, 10);
     if (!start_input())
         return 0;
@@ -64,8 +74,8 @@ int main()
 
         auto command = cell_input(game.width, game.height, game.mask);
         if (command.second)
-            flag_cell(command.first.first, command.first.second, game.mask);
-        else if (open_cell(command.first.first, command.first.second, game.board, game.mask))
+            flag_cell(command.first.first, command.first.second, game.flags, game.mask);
+        else if (open_cell(command.first.first, command.first.second, game.width, game.height, game.board, game.mask))
         {
             game.handleLose();
             break;
@@ -79,6 +89,7 @@ int main()
     }
 
     // Cleanup
+    system("pause");
 
     return 0;
 }

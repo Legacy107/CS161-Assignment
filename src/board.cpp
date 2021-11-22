@@ -5,6 +5,7 @@
 #include <ctime>
 #include <random>
 #include <algorithm>
+#include <iomanip>
 
 bool is_valid_cell(int x, int y, int width, int height)
 {
@@ -25,7 +26,7 @@ int nearby_mines(int x, int y, int width, int height, std::vector<std::vector<in
     return count;
 }
 
-void gen_board(std::vector<std::vector<int>> &board, int width, int height, int mines, int seed = 0)
+void gen_board(std::vector<std::vector<int>> &board, int width, int height, int mines, int seed)
 {
     if (seed == 0)
         srand(time(0));
@@ -57,25 +58,29 @@ void gen_board(std::vector<std::vector<int>> &board, int width, int height, int 
 bool open_cell(int x, int y, int width, int height, std::vector<std::vector<int>> &board, std::vector<std::vector<int>> &mask)
 {
     if (board[y][x] == -1)
+    {
+        mask[y][x] = 1;
         return true;
+    }
     if (board[y][x] == 0)
         mass_open(x, y, width, height, board, mask);
     else
-        mask[y][x] == 1;
+        mask[y][x] = 1;
     return false;
 }
 
-void flag_cell(int x, int y, std::vector<std::vector<int>> &mask)
+void flag_cell(int x, int y, int &flags, std::vector<std::vector<int>> &mask)
 {
     if (mask[y][x] == -1)
-        mask[y][x] == 0;
+    {
+        mask[y][x] = 0;
+        --flags;
+    }
     else
-        mask[y][x] == -1;
-}
-
-bool is_valid_cell(int x, int y, int width, int height)
-{
-    return 0 <= x && x < width && 0 <= y && y < height;
+    {
+        mask[y][x] = -1;
+        ++flags;
+    }
 }
 
 void mass_open(int x, int y, int width, int height, std::vector<std::vector<int>> &board, std::vector<std::vector<int>> &mask)
@@ -114,9 +119,9 @@ void draw_board(int width, int height, std::vector<std::vector<int>> &board, std
     SetConsoleTextAttribute(h_console, FOREGROUND_BLUE);
     std::cout << "  ";
     for (int column = 1; column <= width; column++)
-        std::cout << column;
+        std::cout << std::setw(3) << column;
 
-    std::cout << endl;
+    std::cout << std::endl;
     for (int row = 0; row < height; row++)
     {
         SetConsoleTextAttribute(h_console, FOREGROUND_BLUE);
@@ -126,25 +131,25 @@ void draw_board(int width, int height, std::vector<std::vector<int>> &board, std
             if (mask[row][column] == -1)
             {
                 SetConsoleTextAttribute(h_console, FOREGROUND_GREEN | FOREGROUND_RED);
-                std::cout << 'F';
+                std::cout << std::setw(3) << 'F';
             }
             else if (!mask[row][column])
             {
                 SetConsoleTextAttribute(h_console, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_RED);
-                std::cout << '-';
+                std::cout << std::setw(3) << '-';
             }
             else if (board[row][column] == -1)
             {
                 SetConsoleTextAttribute(h_console, FOREGROUND_RED);
-                std::cout << "*";
+                std::cout << std::setw(3) << "*";
             }
             else
             {
                 SetConsoleTextAttribute(h_console, FOREGROUND_GREEN);
-                std::cout << board[row][column];
+                std::cout << std::setw(3) << board[row][column];
             }
         }
-        std::cout << endl;
+        std::cout << std::endl;
     }
     SetConsoleTextAttribute(h_console, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_RED);
 }
@@ -165,7 +170,7 @@ void board()
             std::cout << board[i][j] << " ";
         std::cout << std::endl;
     }
-    
+
     board = {{1, 2}, {-1, -1}};
     std::vector<std::vector<int>> mask = {{1, 0}, {-1, 1}};
     draw_board(2, 2, board, mask);

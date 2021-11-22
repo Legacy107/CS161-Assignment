@@ -1,7 +1,11 @@
 #pragma once
-#include <vector>
 #include <iostream>
+#include <vector>
 #include <windows.h>
+#include <ctime>
+#include <random>
+#include <algorithm>
+#include <iomanip>
 
 // check if a cell is inside the board
 bool is_valid_cell(int x, int y, int width, int height);
@@ -27,7 +31,7 @@ void mass_open(int x, int y, int width, int height, std::vector<std::vector<int>
 
 // set mask[x][y] to 0 to if the cell is already flagged
 // else set mask[x][y] to -1
-void flag_cell(int x, int y, std::vector<std::vector<int>> &mask);
+void flag_cell(int x, int y, int &flags, std::vector<std::vector<int>> &mask);
 
 bool check_win(int flags, int mines, int width, int height, std::vector<std::vector<int>> &board, std::vector<std::vector<int>> &mask);
 
