@@ -1,4 +1,4 @@
-#include "../header/board.h"
+#include "../header/input.h"
 
 using namespace std;
 
