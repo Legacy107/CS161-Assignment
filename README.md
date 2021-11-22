@@ -20,3 +20,30 @@ CS161 Final Assignment: Minesweeper Clone
 - Using keyboard (arrow keys) to select a cell.
 - Rendering images.
 - Using struct.
+
+## Command
+
+- Build project
+```sh
+~ make
+```
+
+- Run project
+```sh
+~ main
+```
+
+- Build driver
+```sh
+~ make driver
+```
+
+- Run driver
+```sh
+~ driver <board/input>
+```
+
+- Cleanup all .exe and .o
+```sh
+~ make clean
+```
