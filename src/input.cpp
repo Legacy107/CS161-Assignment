@@ -33,18 +33,17 @@ std::pair<std::pair<int, int>, bool> cell_input(int width, int height, std::vect
         std::stringstream ss(s);
         ss >> pos;
         a = pos - 'A';
-        ss >> pos;
-        b = pos - '0';
+        ss >> b;
+        --b;
         if (a < 0 || a >= height || b < 0 || b >= width)
             std::cout << "Wrong input. Try again!." << std::endl;
         else if (mask[a][b] == 1)
             std::cout << "Already open. Try again." << std::endl;
         else
         {
-            ss >> pos;
-            if (pos == 'F')
-                return {{a, b}, 1};
-            return {{a, b}, 0};
+            if (s[s.size() - 1] == 'F')
+                return {{b, a}, 1};
+            return {{b, a}, 0};
         }
     }
 }
