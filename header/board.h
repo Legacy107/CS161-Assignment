@@ -3,7 +3,11 @@
 #include <iostream>
 #include <windows.h>
 
-bool is_valid_cell(int x,int y, int width, int height);
+// check if a cell is inside the board
+bool is_valid_cell(int x, int y, int width, int height);
+
+// count all nearby mines of a cell
+int nearby_mines(int x, int y, int width, int height, std::vector<std::vector<int>> &board);
 
 // fill the board vector with 0
 // if seed is 0, generate a random seed
