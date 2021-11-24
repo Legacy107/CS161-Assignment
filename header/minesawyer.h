@@ -13,6 +13,7 @@ struct minesawyer
     std::vector<std::vector<int>> board, mask;
     int width, height, mines;
     int flags = 0;
+    std::pair<int, int> cursor = {0, 0};
 
     minesawyer();
 
