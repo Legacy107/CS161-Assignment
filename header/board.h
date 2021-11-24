@@ -37,4 +37,12 @@ bool check_win(int flags, int mines, int width, int height, std::vector<std::vec
 
 void draw_board(int width, int height, std::vector<std::vector<int>> &board, std::vector<std::vector<int>> &mask);
 
+// write board to board.txt
+// format:
+// width height mines seed
+// mask[0][0] ... mask[0][width]
+//    :					:
+// mask[height][0] ... mask[width][height]
+void save_board(int width, int height, int mines, int seed, std::vector<std::vector<int>> &mask);
+
 void board();

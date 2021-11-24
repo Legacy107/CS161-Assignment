@@ -1,7 +1,7 @@
 .PHONY: all clean
 
 CXX = g++ -std=c++14 -Wall -Wextra -w -O2
-lib = board.o input.o
+lib = board.o input.o minesawyer.o menu_scene.o chooser_scene.o game_scene.o, score_scene.o
 
 # Build entire program
 all: main
@@ -14,6 +14,21 @@ board.o: .\src\board.cpp .\header\board.h
 
 input.o: .\src\input.cpp .\header\input.h
 	${CXX} -c .\src\input.cpp
+
+minesawyer.o: .\src\minesawyer.cpp .\header\minesawyer.h
+	${CXX} -c .\src\minesawyer.cpp
+
+menu_scene.o: .\src\menu_scene.cpp .\header\menu_scene.h
+	${CXX} -c .\src\menu_scene.cpp
+
+menu_scene.o: .\src\chooser_scene.cpp .\header\chooser_scene.h
+	${CXX} -c .\src\chooser_scene.cpp
+
+menu_scene.o: .\src\game_scene.cpp .\header\game_scene.h
+	${CXX} -c .\src\game_scene.cpp
+
+menu_scene.o: .\src\score_scene.cpp .\header\score_scene.h
+	${CXX} -c .\src\score_scene.cpp
 
 main.o: main.cpp
 	${CXX} -c main.cpp
