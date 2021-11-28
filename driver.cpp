@@ -2,6 +2,7 @@
 #include <iostream>
 #include "./header/board.h"
 #include "./header/input.h"
+#include "./header/score.h"
 
 using namespace std;
 
@@ -12,6 +13,7 @@ int main(int argc, char *argv[])
     map<string, FnPtr> strategy;
     strategy["board"] = board;
     strategy["input"] = input;
+    strategy["score"] = score;
 
     strategy[argv[1]]();
 
