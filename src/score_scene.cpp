@@ -1,8 +1,34 @@
 #include "../header/global.h"
 #include "../header/minesawyer.h"
+#include "../header/score.h"
 #include <iostream>
 #include <windows.h>
 #include <vector>
+
+void score_draw()
+{
+    std::vector<int> scores = get_scores();
+
+    std::cout << "==========" << std::endl;
+    std::cout << "High Score" << std::endl;
+    std::cout << "==========" << std::endl << std::endl;
+
+    for (int i = 0; i < scores.size(); i++)
+        std::cout << i + 1 << ". " << scores[i] << std::endl;
+
+    std::cout << std::endl;
+    std::cout << "< Menu (M)" << std::endl;
+}
+
+bool score_input(struct minesawyer *game)
+{
+    if (GetKeyState('M') & 0x8000)
+    {
+        game->change_scene(MENU);
+        return true;
+    }
+    return false;
+}
 
 void score_scene(struct minesawyer *game)
 {
