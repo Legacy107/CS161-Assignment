@@ -5,6 +5,7 @@
 #include "./header/board.h"
 #include "./header/input.h"
 #include "./header/score.h"
+#include "./header/util.h"
 #include "./header/score_scene.h"
 
 using namespace std;
@@ -18,6 +19,7 @@ int main(int argc, char *argv[])
     strategy["board"] = board;
     strategy["input"] = input;
     strategy["score"] = score;
+    strategy["util"] = util;
     scene_strategy["score"] = score_scene;
 
     if (argv[1][0] == '#')

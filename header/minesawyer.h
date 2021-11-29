@@ -2,6 +2,7 @@
 #include <map>
 #include <vector>
 #include <fstream>
+#include <chrono>
 #include "../header/global.h"
 #include "../header/board.h"
 
@@ -15,6 +16,7 @@ struct minesawyer
     int width, height, mines;
     int flags = 0;
     std::pair<int, int> cursor = {0, 0};
+    std::chrono::steady_clock::time_point start_time;
 
     minesawyer();
 

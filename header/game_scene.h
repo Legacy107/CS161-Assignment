@@ -1,9 +1,11 @@
 #pragma once
 #include "../header/global.h"
+#include "../header/util.h"
 #include "../header/minesawyer.h"
 #include "../header/board.h"
 #include <iostream>
 #include <windows.h>
+#include <iomanip>
 
 // Display board and all options
 // Call check_win() and display end game msg, score

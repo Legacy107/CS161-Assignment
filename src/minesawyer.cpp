@@ -4,6 +4,7 @@
 #include <map>
 #include <vector>
 #include <fstream>
+#include <chrono>
 
 typedef void (*FnPtr)(struct minesawyer*);
 
@@ -43,6 +44,9 @@ void minesawyer::create_board(int width, int height, int mines, int seed)
         std::vector<int> mask_row(width);
         mask.push_back(mask_row);
     }
+
+    start_time = std::chrono::steady_clock::now();
+    cursor = {0, 0};
 }
 
 bool minesawyer::load_board()

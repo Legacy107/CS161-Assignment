@@ -1,9 +1,11 @@
 #pragma once
 #include "../header/global.h"
+#include "../header/util.h"
 #include "../header/minesawyer.h"
 #include <iostream>
 #include <windows.h>
 #include <vector>
+#include <iomanip>
 
 std::vector<int> load_score();
 
