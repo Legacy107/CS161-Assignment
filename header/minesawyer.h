@@ -1,6 +1,7 @@
 #pragma once
 #include <map>
 #include <vector>
+#include <fstream>
 #include "../header/global.h"
 #include "../header/board.h"
 
@@ -23,5 +24,8 @@ struct minesawyer
 
     void change_scene(Scene scene);
 
-    void create_board(int width, int height, int mines);
+    void create_board(int width, int height, int mines, int seed);
+
+    // Return true if successfully loaded
+    bool load_board();
 };
