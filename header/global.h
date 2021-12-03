@@ -1,3 +1,3 @@
 #pragma once
 
-enum Scene { MENU, CHOOSER, GAME, SCORE, EXIT };
+enum Scene { MENU, CHOOSER, GAME, END, SCORE, EXIT };

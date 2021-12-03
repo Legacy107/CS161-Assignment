@@ -108,15 +108,15 @@ bool check_win(int flags, int mines, int width, int height, std::vector<std::vec
         return false;
     for (int row = 0; row < height; row++)
         for (int column = 0; column < width; column++)
-            if (mask[row][column] == -1 && board[row][column] != -1)
+            if (mask[row][column] == 0 && board[row][column] != -1)
                 return false;
     return true;
 }
 
-void draw_board(int width, int height, std::vector<std::vector<int>> &board, std::vector<std::vector<int>> &mask)
+void draw_board(int width, int height, std::vector<std::vector<int>> &board, std::vector<std::vector<int>> &mask, std::pair<int, int> cursor)
 {
     HANDLE h_console = GetStdHandle(STD_OUTPUT_HANDLE);
-    SetConsoleTextAttribute(h_console, FOREGROUND_BLUE);
+    SetConsoleTextAttribute(h_console, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
     std::cout << "  ";
     for (int column = 1; column <= width; column++)
         std::cout << std::setw(3) << column;
@@ -124,28 +124,30 @@ void draw_board(int width, int height, std::vector<std::vector<int>> &board, std
     std::cout << std::endl;
     for (int row = 0; row < height; row++)
     {
-        SetConsoleTextAttribute(h_console, FOREGROUND_BLUE);
+        SetConsoleTextAttribute(h_console, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
         std::cout << static_cast<char>('A' + row) << " ";
         for (int column = 0; column < width; column++)
         {
+            auto background = (cursor.first == column && cursor.second == row) ? COMMON_LVB_REVERSE_VIDEO : 0;
+
             if (mask[row][column] == -1)
             {
-                SetConsoleTextAttribute(h_console, FOREGROUND_GREEN | FOREGROUND_RED);
+                SetConsoleTextAttribute(h_console, background | FOREGROUND_GREEN | FOREGROUND_RED);
                 std::cout << std::setw(3) << 'F';
             }
             else if (!mask[row][column])
             {
-                SetConsoleTextAttribute(h_console, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_RED);
+                SetConsoleTextAttribute(h_console, background | FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_RED);
                 std::cout << std::setw(3) << '-';
             }
             else if (board[row][column] == -1)
             {
-                SetConsoleTextAttribute(h_console, FOREGROUND_RED);
+                SetConsoleTextAttribute(h_console, background | FOREGROUND_RED | FOREGROUND_INTENSITY);
                 std::cout << std::setw(3) << "*";
             }
             else
             {
-                SetConsoleTextAttribute(h_console, FOREGROUND_GREEN);
+                SetConsoleTextAttribute(h_console, background | FOREGROUND_GREEN);
                 std::cout << std::setw(3) << board[row][column];
             }
         }
@@ -173,5 +175,5 @@ void board()
 
     board = {{1, 2}, {-1, -1}};
     std::vector<std::vector<int>> mask = {{1, 0}, {-1, 1}};
-    draw_board(2, 2, board, mask);
+    draw_board(2, 2, board, mask, {0, 1});
 }

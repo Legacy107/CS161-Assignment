@@ -35,7 +35,7 @@ void flag_cell(int x, int y, int &flags, std::vector<std::vector<int>> &mask);
 
 bool check_win(int flags, int mines, int width, int height, std::vector<std::vector<int>> &board, std::vector<std::vector<int>> &mask);
 
-void draw_board(int width, int height, std::vector<std::vector<int>> &board, std::vector<std::vector<int>> &mask);
+void draw_board(int width, int height, std::vector<std::vector<int>> &board, std::vector<std::vector<int>> &mask, std::pair<int, int> cursor = { -1, -1});
 
 // write board to board.txt
 // format:

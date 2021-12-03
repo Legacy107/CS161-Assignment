@@ -3,6 +3,7 @@
 #include <chrono>
 #include <string.h>
 #include <thread>
+#include <windows.h>
 
 // Get duration from start to now in ms
 int get_duration(std::chrono::steady_clock::time_point start)
@@ -23,6 +24,27 @@ std::string format_duration(int duration)
     duration /= 60;
     m = duration;
     return std::to_string(m) + "m " + std::to_string(s) + "s " + std::to_string(ms) + "ms";
+}
+
+void set_cursor(int x, int y)
+{
+    HANDLE handle;
+    COORD coordinates;
+
+    handle = GetStdHandle(STD_OUTPUT_HANDLE);
+    coordinates.X = x;
+    coordinates.Y = y;
+    SetConsoleCursorPosition(handle, coordinates);
+}
+
+void show_cursor(bool show)
+{
+    HANDLE out = GetStdHandle(STD_OUTPUT_HANDLE);
+    CONSOLE_CURSOR_INFO cursorInfo;
+
+    GetConsoleCursorInfo(out, &cursorInfo);
+    cursorInfo.bVisible = show;
+    SetConsoleCursorInfo(out, &cursorInfo);
 }
 
 void util()

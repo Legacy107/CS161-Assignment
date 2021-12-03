@@ -4,6 +4,7 @@
 #include "./header/minesawyer.h"
 #include "./header/menu_scene.h"
 #include "./header/chooser_scene.h"
+#include "./header/end_scene.h"
 #include "./header/game_scene.h"
 #include "./header/score_scene.h"
 
@@ -16,6 +17,7 @@ int main()
     struct minesawyer game;
     game.add_scene(MENU, menu_scene);
     game.add_scene(CHOOSER, chooser_scene);
+    game.add_scene(END, end_scene);
     game.add_scene(GAME, game_scene);
     game.add_scene(SCORE, score_scene);
 

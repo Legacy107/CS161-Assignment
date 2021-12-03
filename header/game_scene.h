@@ -7,8 +7,9 @@
 #include <windows.h>
 #include <iomanip>
 
+void update_timer(struct minesawyer *game);
+
 // Display board and all options
-// Call check_win() and display end game msg, score
 void game_draw(struct minesawyer *game);
 
 // Receive inputs by using GetKeyState()

@@ -7,6 +7,7 @@
 #include "./header/score.h"
 #include "./header/util.h"
 #include "./header/score_scene.h"
+#include "./header/game_scene.h"
 
 using namespace std;
 
@@ -21,9 +22,11 @@ int main(int argc, char *argv[])
     strategy["score"] = score;
     strategy["util"] = util;
     scene_strategy["score"] = score_scene;
+    scene_strategy["game"] = game_scene;
 
     if (argv[1][0] == '#')
     {
+        show_cursor(false);
         struct minesawyer game;
         game.add_scene(SCORE, score_scene);
         scene_strategy[argv[2]](&game);
