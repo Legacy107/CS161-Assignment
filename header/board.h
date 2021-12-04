@@ -39,10 +39,10 @@ void draw_board(int width, int height, std::vector<std::vector<int>> &board, std
 
 // write board to board.txt
 // format:
-// width height mines seed
+// width height mines seed flags duration
 // mask[0][0] ... mask[0][width]
 //    :					:
 // mask[height][0] ... mask[width][height]
-void save_board(int width, int height, int mines, int seed, std::vector<std::vector<int>> &mask);
+void save_board(int width, int height, int mines, int seed, int flags, int duration, std::vector<std::vector<int>> &mask);
 
 void board();

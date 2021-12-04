@@ -51,16 +51,20 @@ void minesawyer::create_board(int width, int height, int mines, int seed)
 
 bool minesawyer::load_board()
 {
-    int width = 0, height = 0, mines = 0, seed = 0;
+    int width = 0, height = 0, mines = 0, seed = 0, flags=0, duration=0;
     std::ifstream board_file("board.txt");
 
-    board_file >> width >> height >> mines >> seed;
+    board_file >> width >> height >> mines >> seed >> flags >> duration;
 
     // No board is found
     if (!width)
         return false;
 
     create_board(width, height, mines, seed);
+
+    this->flags = flags;
+    std::chrono::milliseconds chrono_duration(duration);
+    start_time = start_time - chrono_duration;
 
     // Read mask
     for (int i = 0; i < height; i++)
