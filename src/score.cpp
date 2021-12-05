@@ -5,11 +5,11 @@
 #include <algorithm>
 #include <string.h>
 
-std::vector<int> get_scores()
+std::vector<int> get_scores(int mines)
 {
     int n = 0, tmp;
     std::vector<int> scores;
-    std::ifstream score_file("score.txt");
+    std::ifstream score_file("score" + std::to_string(mines) + ".txt");
 
     score_file >> n;
     for (int i = 0; i < n; i++)
@@ -23,16 +23,16 @@ std::vector<int> get_scores()
     return scores;
 }
 
-int get_highscore()
+int get_highscore(int mines)
 {
-    std::vector<int> scores = get_scores();
+    std::vector<int> scores = get_scores(mines);
     return scores[0];
 }
 
-void update_scoreboard(int score)
+void update_scoreboard(int mines, int score)
 {
-    std::vector<int> scores = get_scores();
-    std::ofstream score_file("score.txt");
+    std::vector<int> scores = get_scores(mines);
+    std::ofstream score_file("score" + std::to_string(mines) + ".txt");
     int n = std::min(SCORE_LIMIT, (int)scores.size() + 1);
 
     auto it = std::lower_bound(scores.begin(), scores.end(), score);
@@ -49,14 +49,14 @@ void update_scoreboard(int score)
 
 void score()
 {
-    std::vector<int> scores = get_scores();
+    std::vector<int> scores = get_scores(10);
     for (score : scores)
         std::cout << score << " ";
-    std::cout << std::endl << get_highscore() << std::endl;
+    std::cout << std::endl << get_highscore(10) << std::endl;
 
-    update_scoreboard(100);
+    update_scoreboard(10, 100);
 
-    scores = get_scores();
+    scores = get_scores(10);
     for (score : scores)
         std::cout << score << " ";
 }

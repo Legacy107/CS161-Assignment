@@ -5,16 +5,16 @@
 #include <algorithm>
 #include <string.h>
 
-const int SCORE_LIMIT = 10;
+const int SCORE_LIMIT = 5;
 
-// Get all scores from score.txt;
-std::vector<int> get_scores();
+// Get all scores from score${mines}.txt;
+std::vector<int> get_scores(int mines);
 
-// Get the highest score from score.txt
-int get_highscore();
+// Get the highest score from score${mines}.txt
+int get_highscore(int mines);
 
-// Insert new score into score.txt
+// Insert new score into score${mines}.txt
 // Only save top 10 highscores
-void update_scoreboard(int score);
+void update_scoreboard(int mines, int score);
 
 void score();

@@ -9,17 +9,26 @@
 
 void score_draw()
 {
-    std::vector<int> scores = get_scores();
+    HANDLE h_console = GetStdHandle(STD_OUTPUT_HANDLE);
 
     std::cout << "============" << std::endl;
     std::cout << " High Score " << std::endl;
     std::cout << "============" << std::endl << std::endl;
 
-    for (int i = 0; i < scores.size(); i++)
-        std::cout << std::setw(2) << i + 1 << ". "
-                  << format_duration(scores[i]) << std::endl;
+    for (int i = 0; i < board_options.size(); i++)
+    {
+        std::vector<int> scores = get_scores(board_options[i].mines);
 
-    std::cout << std::endl;
+        SetConsoleTextAttribute(h_console, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+        std::cout << board_options[i].name << " scoreboard" << std::endl;
+
+        SetConsoleTextAttribute(h_console, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_RED);
+        for (int id = 0; id < scores.size(); id++)
+            std::cout << std::setw(2) << id + 1 << ". "
+                      << format_duration(scores[id]) << std::endl;
+
+        std::cout << std::endl;
+    }
     std::cout << "< Menu (M)" << std::endl;
 }
 
