@@ -4,48 +4,51 @@
 #include <windows.h>
 #include "game_scene.h"
 
-void chooser_scene(struct minesawyer *game)
+void chooser_draw()
 {
-    while (true)
+    std::cout << "================" << std::endl;
+    std::cout << " Choose a board " << std::endl;
+    std::cout << "================" << std::endl;
+    std::cout << endl;
+
+    for (int i = 0; i < board_options.size(); i++)
     {
-        chooser_draw();
-        while (true)
-        {
-            if (chooser_input(game))
-                return;
-        }
+        std::cout << i + 1 << ". ";
+        cout << board_options[i].name << " " << board_options[i].width
+             << " x " << board_options[i].height << " "
+             << board_options[i].mines << " mines (" << i + 1 << ")" << std::endl;
     }
+
+    std::cout << std::endl << "< Menu (M)" << std::endl;
 }
+
 bool chooser_input(struct minesawyer *game)
 {
-    // Receive inputs by using GetKeyState()
-    // If user selects an option, process and change scene then return true
-    // else return false
-    // List of options:
-    // - Beginner: call game->create_board(), change to scene GAME
-    // - Intermediate: call game->create_board(), change to scene GAME
-    // - Expert: call game->create_board(), change to scene GAME
-    if(GetKeyState('B') & 0x8000)
+    for (int i = 0; i < board_options.size(); i++)
     {
-        game->create_board(10,10,10);
-        game->process();
-        game->change_scene(game->current_scene);
+        if (GetKeyState((char)('1' + i)) & 0x8000)
+        {
+            game->create_board(board_options[i].width, board_options[i].height, board_options[i].mines);
+            game->change_scene(GAME);
+            return true;
+        }
+    }
+
+    if (GetKeyState('M') & 0x8000)
+    {
+        game->change_scene(MENU);
         return true;
     }
-    else if(GetKeyState('I') & 0x8000)
+
+    return false;
+}
+
+void chooser_scene(struct minesawyer *game)
+{
+    chooser_draw();
+    while (true)
     {
-        game->create_board(16,16,40);
-        game->process();
-        game->change_scene(game->current_scene);
-        return true;
+        if (chooser_input(game))
+            return;
     }
-    else if(GetKeyState('E') & 0x8000)
-    {
-        game->create_board(16,30,99);
-        game->process();
-        game->change_scene(game->current_scene);
-        return true;
-    }
-    else 
-        return false;
 }
