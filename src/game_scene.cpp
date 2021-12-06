@@ -9,22 +9,19 @@
 void update_timer(struct minesawyer *game)
 {
     set_cursor(18, 0);
-    std::cout << "\t\tTime: " << format_duration(get_duration(game->start_time))
-              << std::endl << std::endl;
+    std::cout << "\t\tTime: " << format_duration(get_duration(game->start_time)) << "       ";
 }
 
 void game_draw(struct minesawyer *game)
 {
     system("cls");
     std::cout << "Remaining Flags: " << std::setw(2) << game->mines - game->flags;
+    update_timer();
     std::cout << std::endl << std::endl;
 
     draw_board(game->width, game->height, game->board, game->mask, game->cursor);
-}
 
-void game_draw(struct minesawyer *game)
-{
-    system("cls");
+    std::cout << std::endl << std::endl;
     std::cout << "Move (arrow kes)" << std::endl;
     std::cout << "Open (O)" << std::endl;
     std::cout << "Flag (F)" << std::endl;

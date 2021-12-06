@@ -6,6 +6,7 @@
 
 void chooser_draw()
 {
+    system("cls");
     std::cout << "================" << std::endl;
     std::cout << " Choose a board " << std::endl;
     std::cout << "================" << std::endl;

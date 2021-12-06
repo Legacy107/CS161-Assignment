@@ -9,6 +9,7 @@
 
 void score_draw()
 {
+    system("cls");
     HANDLE h_console = GetStdHandle(STD_OUTPUT_HANDLE);
 
     std::cout << "============" << std::endl;
