@@ -6,6 +6,7 @@
 #include <random>
 #include <algorithm>
 #include <iomanip>
+#include <fstream>
 
 // check if a cell is inside the board
 bool is_valid_cell(int x, int y, int width, int height);

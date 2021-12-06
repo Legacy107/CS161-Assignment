@@ -17,8 +17,8 @@ void game_draw(struct minesawyer *game);
 // else return false
 // List of options:
 // - arrows: move game->cursor
-// - Select: validate and call open_cell()
-// - Flag: validate and call open_cell()
+// - Open: validate and call open_cell()
+// - Flag: validate and call flag_cell()
 // - Back: call save_board(), change scene to MENU
 bool game_input(struct minesawyer *game);
 

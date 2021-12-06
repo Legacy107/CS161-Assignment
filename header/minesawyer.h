@@ -13,7 +13,7 @@ struct minesawyer
     std::map<Scene, FnPtr> scenes;
     Scene current_scene = MENU;
     std::vector<std::vector<int>> board, mask;
-    int width, height, mines;
+    int width, height, mines, seed;
     int flags = 0;
     std::pair<int, int> cursor = {0, 0};
     std::chrono::steady_clock::time_point start_time;
@@ -28,7 +28,7 @@ struct minesawyer
 
     void reset_board();
 
-    void create_board(int width, int height, int mines, int seed);
+    void create_board(int width, int height, int mines, int seed = 0);
 
     // Return true if successfully loaded
     bool load_board();
