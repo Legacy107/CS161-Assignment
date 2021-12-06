@@ -23,5 +23,5 @@ struct minesawyer
 
     void change_scene(Scene scene);
 
-    void create_board(int width, int height, int mines);
+    void create_board(int width, int height, int mines, int seed = 0);
 };
