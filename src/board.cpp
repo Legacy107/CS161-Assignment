@@ -6,6 +6,7 @@
 #include <random>
 #include <algorithm>
 #include <iomanip>
+#include <fstream>
 
 bool is_valid_cell(int x, int y, int width, int height)
 {
@@ -174,4 +175,19 @@ void board()
     board = {{1, 2}, {-1, -1}};
     std::vector<std::vector<int>> mask = {{1, 0}, {-1, 1}};
     draw_board(2, 2, board, mask);
+}
+
+void save_board(int width, int height, int mines, int seed, int flags, int duration, std::vector<std::vector<int>> &mask);
+{
+    std::ofstream MyFile("board.txt");
+    MyFile << width << " " << height << " " << mines << " " << seed << flags << duration;
+    for (int i = 0; i < height; i++)
+    {
+        for (int j = 0; j < width; j++)
+        {
+            MyFile << mask[i][j] << "\t";
+        }
+        std::cout << "\n";
+    }
+    MyFile.close();
 }
