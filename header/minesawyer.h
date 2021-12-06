@@ -11,7 +11,7 @@ struct minesawyer
     std::map<Scene, FnPtr> scenes;
     Scene current_scene = MENU;
     std::vector<std::vector<int>> board, mask;
-    int width, height, mines;
+    int width, height, mines, seed;
     int flags = 0;
     std::pair<int, int> cursor = {0, 0};
 
@@ -24,4 +24,6 @@ struct minesawyer
     void change_scene(Scene scene);
 
     void create_board(int width, int height, int mines, int seed = 0);
+
+    void load_board();
 };
