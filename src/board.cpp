@@ -26,10 +26,12 @@ int nearby_mines(int x, int y, int width, int height, std::vector<std::vector<in
     return count;
 }
 
-void gen_board(std::vector<std::vector<int>> &board, int width, int height, int mines, int seed)
+void gen_board(std::vector<std::vector<int>> &board, int width, int height, int mines, int &seed)
 {
-    if (seed == 0)
-        srand(time(0));
+    if (!seed)
+        seed = time(0);
+
+    srand(seed);
 
     std::vector<std::pair<int, int>> cells;
     for (int i = 0; i < height; i++)

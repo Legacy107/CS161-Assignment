@@ -26,11 +26,21 @@ void minesawyer::change_scene(Scene scene)
     current_scene = scene;
 }
 
+void minesawyer::reset_board()
+{
+    flags = 0;
+    cursor = {0, 0};
+    board.clear();
+    mask.clear();
+}
+
 void minesawyer::create_board(int width, int height, int mines, int seed)
 {
+    reset_board();
     this->width = width;
     this->height = height;
     this->mines = mines;
+    this->seed = seed;
 
     for (int i = 0; i < height; i++)
     {
@@ -46,12 +56,11 @@ void minesawyer::create_board(int width, int height, int mines, int seed)
     }
 
     start_time = std::chrono::steady_clock::now();
-    cursor = {0, 0};
 }
 
 bool minesawyer::load_board()
 {
-    int width = 0, height = 0, mines = 0, seed = 0, flags=0, duration=0;
+    int duration = 0;
     std::ifstream board_file("board.txt");
 
     board_file >> width >> height >> mines >> seed >> flags >> duration;

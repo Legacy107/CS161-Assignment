@@ -18,7 +18,7 @@ int nearby_mines(int x, int y, int width, int height, std::vector<std::vector<in
 // generate a vector<pair<int,int>> containing every cells
 // use shuffle() to pick random cells that has mines
 // for cells that don't has mines, count the number of mines around them
-void gen_board(std::vector<std::vector<int>> &board, int width, int height, int mines, int seed = 0);
+void gen_board(std::vector<std::vector<int>> &board, int width, int height, int mines, int &seed);
 
 // return true if board[x][y] has a mine
 // else if board[x][y] is 0, call mass_open() and return false

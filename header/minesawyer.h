@@ -26,6 +26,8 @@ struct minesawyer
 
     void change_scene(Scene scene);
 
+    void reset_board();
+
     void create_board(int width, int height, int mines, int seed);
 
     // Return true if successfully loaded
