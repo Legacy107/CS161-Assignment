@@ -26,7 +26,8 @@ bool menu_input(struct minesawyer *game)
     }
     if (GetKeyState('C') & 0x8000)
     {
-        game->loadboard();
+        if (!game->load_board())
+            return false;
         game->change_scene(GAME);
         return true;
     }
