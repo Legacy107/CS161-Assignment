@@ -8,7 +8,7 @@
 
 typedef void (*FnPtr)(struct minesawyer*);
 
-minesawyer::minesawyer(){};
+minesawyer::minesawyer(){}
 
 void minesawyer::add_scene(Scene id, FnPtr scene)
 {
@@ -47,7 +47,7 @@ void minesawyer::create_board(int width, int height, int mines, int seed)
         std::vector<int> board_row(width);
         board.push_back(board_row);
     }
-    gen_board(board, width, height, mines, seed);
+    gen_board(board, width, height, mines, this->seed);
 
     for (int i = 0; i < height; i++)
     {
@@ -63,10 +63,8 @@ bool minesawyer::load_board()
     int duration = 0;
     std::ifstream board_file("board.txt");
 
-    board_file >> width >> height >> mines >> seed >> flags >> duration;
-
     // No board is found
-    if (!width)
+    if (!(board_file >> width >> height >> mines >> seed >> flags >> duration))
         return false;
 
     create_board(width, height, mines, seed);

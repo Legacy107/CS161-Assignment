@@ -3,7 +3,7 @@
 #include <fstream>
 #include <vector>
 #include <algorithm>
-#include <string.h>
+#include <string>
 
 const int SCORE_LIMIT = 5;
 

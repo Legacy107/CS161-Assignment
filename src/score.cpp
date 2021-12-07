@@ -3,7 +3,7 @@
 #include <fstream>
 #include <vector>
 #include <algorithm>
-#include <string.h>
+#include <string>
 
 std::vector<int> get_scores(int mines)
 {

@@ -1,7 +1,7 @@
 #include "../header/util.h"
 #include <iostream>
 #include <chrono>
-#include <string.h>
+#include <string>
 #include <thread>
 #include <windows.h>
 

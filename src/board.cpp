@@ -2,7 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <windows.h>
-#include <ctime>
+#include <chrono>
 #include <random>
 #include <algorithm>
 #include <iomanip>
@@ -30,9 +30,8 @@ int nearby_mines(int x, int y, int width, int height, std::vector<std::vector<in
 void gen_board(std::vector<std::vector<int>> &board, int width, int height, int mines, int &seed)
 {
     if (!seed)
-        seed = time(0);
-
-    srand(seed);
+        seed = std::chrono::steady_clock::now().time_since_epoch().count();
+    std::mt19937 rng(seed);
 
     std::vector<std::pair<int, int>> cells;
     for (int i = 0; i < height; i++)
@@ -42,7 +41,7 @@ void gen_board(std::vector<std::vector<int>> &board, int width, int height, int 
             cells.push_back({i, j});
         }
     }
-    random_shuffle(cells.begin(), cells.end());
+    shuffle(cells.begin(), cells.end(), rng);
     for (int i = 0; i < mines; i++)
     {
         board[cells[i].first][cells[i].second] = -1;
@@ -159,6 +158,21 @@ void draw_board(int width, int height, std::vector<std::vector<int>> &board, std
     SetConsoleTextAttribute(h_console, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_RED);
 }
 
+void save_board(int width, int height, int mines, int seed, int flags, int duration, std::vector<std::vector<int>> &mask)
+{
+    std::ofstream MyFile("board.txt");
+    MyFile << width << " " << height << " " << mines << " " << seed << " " << flags << " " << duration << std::endl;
+    for (int i = 0; i < height; i++)
+    {
+        for (int j = 0; j < width; j++)
+        {
+            MyFile << mask[i][j] << "\t";
+        }
+        MyFile << "\n";
+    }
+    MyFile.close();
+}
+
 void board()
 {
     // Driver code for testing
@@ -168,7 +182,9 @@ void board()
         {0, 0, 0, 0},
         {0, 0, 0, 0},
     };
-    gen_board(board, 4, 4, 5);
+    int seed = 0;
+
+    gen_board(board, 4, 4, 5, seed);
     for (int i = 0; i < board.size(); i++)
     {
         for (int j = 0; j < board[0].size(); j++)
@@ -179,19 +195,4 @@ void board()
     board = {{1, 2}, {-1, -1}};
     std::vector<std::vector<int>> mask = {{1, 0}, {-1, 1}};
     draw_board(2, 2, board, mask, {0, 1});
-}
-
-void save_board(int width, int height, int mines, int seed, int flags, int duration, std::vector<std::vector<int>> &mask);
-{
-    std::ofstream MyFile("board.txt");
-    MyFile << width << " " << height << " " << mines << " " << seed << flags << duration;
-    for (int i = 0; i < height; i++)
-    {
-        for (int j = 0; j < width; j++)
-        {
-            MyFile << mask[i][j] << "\t";
-        }
-        std::cout << "\n";
-    }
-    MyFile.close();
 }

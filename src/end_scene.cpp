@@ -14,22 +14,31 @@ void end_draw(struct minesawyer *game)
     {
         int score = get_duration(game->start_time), highscore = 0;
 
-        update_scoreboard(score);
-        highscore = get_highscore();
+        update_scoreboard(game->mines, score);
+        highscore = get_highscore(game->mines);
 
-        std::cout << "You win!" << std::endl;
-        std::cout << "Score: " << score << "\t" << "Highscore: " << highscore;
+        std::cout << "==========" << std::endl;
+        std::cout << " You win! " << std::endl;
+        std::cout << "==========" << std::endl << std::endl;
+        std::cout << "Score: " << format_duration(score) << "\t"
+                  << "Highscore: " << format_duration(highscore) <<std::endl;
     }
     else
-        std::cout << "You lose!";
+    {
+        std::cout << "===========" << std::endl;
+        std::cout << " You lose! " << std::endl;
+        std::cout << "===========" << std::endl;
+    }
 
-    cout <<  std::endl << std::endl;
+    std::cout << std::endl;
     draw_board(game->width, game->height, game->board, game->mask);
+
+    std::cout << std::endl << "< Menu (M)" << std::endl;
 }
 
 bool end_input(struct minesawyer *game)
 {
-    if (GetKeyState(VK_BACK) & 0x8000)
+    if (GetKeyState('M') & 0x8000)
     {
         game->change_scene(MENU);
         return true;
@@ -41,8 +50,8 @@ void end_scene(struct minesawyer *game)
 {
     while (true)
     {
-        game_draw(game);
-        while (!game_input(game)) {}
+        end_draw(game);
+        while (!end_input(game)) {}
         if (game->current_scene != END)
             return;
     }

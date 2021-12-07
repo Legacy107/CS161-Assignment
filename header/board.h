@@ -2,7 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <windows.h>
-#include <ctime>
+#include <chrono>
 #include <random>
 #include <algorithm>
 #include <iomanip>

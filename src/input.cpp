@@ -2,7 +2,7 @@
 #include <vector>
 #include <iostream>
 #include <sstream>
-#include <string.h>
+#include <string>
 
 bool start_input()
 {
