@@ -9,6 +9,7 @@
 
 void score_draw()
 {
+    const int OFFSET = 100;
     system("cls");
     HANDLE h_console = GetStdHandle(STD_OUTPUT_HANDLE);
 
@@ -17,19 +18,20 @@ void score_draw()
     std::cout << "============" << std::endl << std::endl;
 
     for (int i = 0; i < board_options.size(); i++)
-    {
-        std::vector<int> scores = get_scores(board_options[i].mines);
+        for (int j = 0; j < board_options[i].size(); j++)
+        {
+            std::vector<int> scores = get_scores(board_options[i][j].mines + i * OFFSET);
 
-        SetConsoleTextAttribute(h_console, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
-        std::cout << board_options[i].name << " scoreboard" << std::endl;
+            SetConsoleTextAttribute(h_console, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+            std::cout << board_options[i][j].name << " scoreboard" << std::endl;
 
-        SetConsoleTextAttribute(h_console, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_RED);
-        for (int id = 0; id < scores.size(); id++)
-            std::cout << std::setw(2) << id + 1 << ". "
-                      << format_duration(scores[id]) << std::endl;
+            SetConsoleTextAttribute(h_console, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_RED);
+            for (int id = 0; id < scores.size(); id++)
+                std::cout << std::setw(2) << id + 1 << ". "
+                          << format_duration(scores[id]) << std::endl;
 
-        std::cout << std::endl;
-    }
+            std::cout << std::endl;
+        }
     std::cout << "< Menu (M)" << std::endl;
 }
 

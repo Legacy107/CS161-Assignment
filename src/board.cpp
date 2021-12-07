@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <iomanip>
 #include <fstream>
+#include <queue>
 
 bool is_valid_cell(int x, int y, int width, int height)
 {
@@ -27,7 +28,7 @@ int nearby_mines(int x, int y, int width, int height, std::vector<std::vector<in
     return count;
 }
 
-void gen_board(std::vector<std::vector<int>> &board, int width, int height, int mines, int &seed)
+void gen_mines(std::vector<std::vector<int>> &board, int width, int height, int mines, int &seed)
 {
     if (!seed)
         seed = std::chrono::steady_clock::now().time_since_epoch().count();
@@ -46,6 +47,11 @@ void gen_board(std::vector<std::vector<int>> &board, int width, int height, int 
     {
         board[cells[i].first][cells[i].second] = -1;
     }
+}
+
+void gen_board(std::vector<std::vector<int>> &board, int width, int height, int mines, int &seed)
+{
+    gen_mines(board, width, height, mines, seed);
 
     for (int i = 0; i < height; i++)
     {
@@ -53,6 +59,43 @@ void gen_board(std::vector<std::vector<int>> &board, int width, int height, int 
         {
             if (board[i][j] != -1)
                 board[i][j] = nearby_mines(j, i, width, height, board);
+        }
+    }
+}
+
+void saw_gen_board(std::vector<std::vector<int>> &board, int width, int height, int mines, int &seed)
+{
+    const int drow[4] = {-1, 0, 0, 1};
+    const int dcol[4] = {0, -1, 1, 0};
+    std::queue<std::pair<int, int>> cell_queue;
+
+    gen_mines(board, width, height, mines, seed);
+
+    for (int i = 0; i < height; i++)
+        for (int j = 0; j < width; j++)
+            if (board[i][j] == -1)
+                cell_queue.push({i, j});
+
+    while(!cell_queue.empty())
+    {
+        int y = cell_queue.front().first;
+        int x = cell_queue.front().second;
+        cell_queue.pop();
+
+        for (int i = 0; i < 4; i++)
+        {
+            int row = y + drow[i];
+            int col = x + dcol[i];
+
+            if (is_valid_cell(col, row, width, height) && board[row][col] == 0)
+            {
+                if (board[y][x] == -1)
+                    board[row][col] = 1;
+                else
+                    board[row][col] = board[y][x] + 1;
+
+                cell_queue.push({row, col});
+            }
         }
     }
 }

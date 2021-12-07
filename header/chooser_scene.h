@@ -5,7 +5,7 @@
 #include <windows.h>
 
 // Display all options
-void chooser_draw();
+void chooser_draw(struct minesawyer *game);
 
 // Receive inputs by using GetKeyState()
 // If user selects an option, process and change scene then return true

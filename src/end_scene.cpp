@@ -10,12 +10,15 @@ void end_draw(struct minesawyer *game)
 {
     system("cls");
 
-    if (check_win(game->flags, game->mines, game->width, game->height, game->board, game->mask))
+    if (game->mode == 1 ||
+        check_win(game->flags, game->mines, game->width, game->height, game->board, game->mask))
     {
-        int score = get_duration(game->start_time), highscore = 0;
+        int score = get_duration(game->start_time);
+        int highscore = 0;
+        int file = game->mines + (game->mode == 1 ? 100 : 0);
 
-        update_scoreboard(game->mines, score);
-        highscore = get_highscore(game->mines);
+        update_scoreboard(file, score);
+        highscore = get_highscore(file);
 
         std::cout << "==========" << std::endl;
         std::cout << " You win! " << std::endl;
