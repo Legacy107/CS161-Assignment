@@ -16,7 +16,7 @@ This is a Minesweeper clone ~~with a twist~~ made for the CS161 Final Assignment
 7. Saving the current state of the board and loading in the next playing session.
 8. Saving high scores.
 
-**Advance features**
+**Advanced features**
 - Using keyboard (arrow keys) to select a cell.
 - Rendering images.
 - Using struct.
