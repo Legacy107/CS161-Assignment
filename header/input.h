@@ -2,7 +2,7 @@
 #include <vector>
 #include <iostream>
 #include <sstream>
-#include <string.h>
+#include <string>
 
 // output instruction: y to start or n to quit
 // get and validate input

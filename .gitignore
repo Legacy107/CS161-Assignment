@@ -34,3 +34,6 @@
 # VSCode settings
 .vscode
 .vs
+
+# Data files
+*.txt

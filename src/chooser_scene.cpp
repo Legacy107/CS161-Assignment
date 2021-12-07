@@ -2,21 +2,21 @@
 #include "../header/minesawyer.h"
 #include <iostream>
 #include <windows.h>
-#include "game_scene.h"
 
 void chooser_draw()
 {
+    system("cls");
     std::cout << "================" << std::endl;
     std::cout << " Choose a board " << std::endl;
     std::cout << "================" << std::endl;
-    std::cout << endl;
+    std::cout << std::endl;
 
     for (int i = 0; i < board_options.size(); i++)
     {
         std::cout << i + 1 << ". ";
-        cout << board_options[i].name << " " << board_options[i].width
-             << " x " << board_options[i].height << " "
-             << board_options[i].mines << " mines (" << i + 1 << ")" << std::endl;
+        std::cout << board_options[i].name << " " << board_options[i].width
+                  << " x " << board_options[i].height << " "
+                  << board_options[i].mines << " mines (" << i + 1 << ")" << std::endl;
     }
 
     std::cout << std::endl << "< Menu (M)" << std::endl;

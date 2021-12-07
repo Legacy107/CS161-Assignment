@@ -2,7 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <windows.h>
-#include <ctime>
+#include <chrono>
 #include <random>
 #include <algorithm>
 #include <iomanip>
@@ -27,10 +27,11 @@ int nearby_mines(int x, int y, int width, int height, std::vector<std::vector<in
     return count;
 }
 
-void gen_board(std::vector<std::vector<int>> &board, int width, int height, int mines, int seed)
+void gen_board(std::vector<std::vector<int>> &board, int width, int height, int mines, int &seed)
 {
-    if (seed == 0)
-        srand(time(0));
+    if (!seed)
+        seed = std::chrono::steady_clock::now().time_since_epoch().count();
+    std::mt19937 rng(seed);
 
     std::vector<std::pair<int, int>> cells;
     for (int i = 0; i < height; i++)
@@ -40,7 +41,7 @@ void gen_board(std::vector<std::vector<int>> &board, int width, int height, int 
             cells.push_back({i, j});
         }
     }
-    random_shuffle(cells.begin(), cells.end());
+    shuffle(cells.begin(), cells.end(), rng);
     for (int i = 0; i < mines; i++)
     {
         board[cells[i].first][cells[i].second] = -1;
@@ -109,15 +110,15 @@ bool check_win(int flags, int mines, int width, int height, std::vector<std::vec
         return false;
     for (int row = 0; row < height; row++)
         for (int column = 0; column < width; column++)
-            if (mask[row][column] == -1 && board[row][column] != -1)
+            if (mask[row][column] == 0 && board[row][column] != -1)
                 return false;
     return true;
 }
 
-void draw_board(int width, int height, std::vector<std::vector<int>> &board, std::vector<std::vector<int>> &mask)
+void draw_board(int width, int height, std::vector<std::vector<int>> &board, std::vector<std::vector<int>> &mask, std::pair<int, int> cursor)
 {
     HANDLE h_console = GetStdHandle(STD_OUTPUT_HANDLE);
-    SetConsoleTextAttribute(h_console, FOREGROUND_BLUE);
+    SetConsoleTextAttribute(h_console, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
     std::cout << "  ";
     for (int column = 1; column <= width; column++)
         std::cout << std::setw(3) << column;
@@ -125,34 +126,51 @@ void draw_board(int width, int height, std::vector<std::vector<int>> &board, std
     std::cout << std::endl;
     for (int row = 0; row < height; row++)
     {
-        SetConsoleTextAttribute(h_console, FOREGROUND_BLUE);
+        SetConsoleTextAttribute(h_console, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
         std::cout << static_cast<char>('A' + row) << " ";
         for (int column = 0; column < width; column++)
         {
+            auto background = (cursor.first == column && cursor.second == row) ? COMMON_LVB_REVERSE_VIDEO : 0;
+
             if (mask[row][column] == -1)
             {
-                SetConsoleTextAttribute(h_console, FOREGROUND_GREEN | FOREGROUND_RED);
+                SetConsoleTextAttribute(h_console, background | FOREGROUND_GREEN | FOREGROUND_RED);
                 std::cout << std::setw(3) << 'F';
             }
             else if (!mask[row][column])
             {
-                SetConsoleTextAttribute(h_console, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_RED);
+                SetConsoleTextAttribute(h_console, background | FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_RED);
                 std::cout << std::setw(3) << '-';
             }
             else if (board[row][column] == -1)
             {
-                SetConsoleTextAttribute(h_console, FOREGROUND_RED);
+                SetConsoleTextAttribute(h_console, background | FOREGROUND_RED | FOREGROUND_INTENSITY);
                 std::cout << std::setw(3) << "*";
             }
             else
             {
-                SetConsoleTextAttribute(h_console, FOREGROUND_GREEN);
+                SetConsoleTextAttribute(h_console, background | FOREGROUND_GREEN);
                 std::cout << std::setw(3) << board[row][column];
             }
         }
         std::cout << std::endl;
     }
     SetConsoleTextAttribute(h_console, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_RED);
+}
+
+void save_board(int width, int height, int mines, int seed, int flags, int duration, std::vector<std::vector<int>> &mask)
+{
+    std::ofstream MyFile("board.txt");
+    MyFile << width << " " << height << " " << mines << " " << seed << " " << flags << " " << duration << std::endl;
+    for (int i = 0; i < height; i++)
+    {
+        for (int j = 0; j < width; j++)
+        {
+            MyFile << mask[i][j] << "\t";
+        }
+        MyFile << "\n";
+    }
+    MyFile.close();
 }
 
 void board()
@@ -164,7 +182,9 @@ void board()
         {0, 0, 0, 0},
         {0, 0, 0, 0},
     };
-    gen_board(board, 4, 4, 5);
+    int seed = 0;
+
+    gen_board(board, 4, 4, 5, seed);
     for (int i = 0; i < board.size(); i++)
     {
         for (int j = 0; j < board[0].size(); j++)
@@ -174,20 +194,5 @@ void board()
 
     board = {{1, 2}, {-1, -1}};
     std::vector<std::vector<int>> mask = {{1, 0}, {-1, 1}};
-    draw_board(2, 2, board, mask);
-}
-
-void save_board(int width, int height, int mines, int seed, int flags, int duration, std::vector<std::vector<int>> &mask);
-{
-    std::ofstream MyFile("board.txt");
-    MyFile << width << " " << height << " " << mines << " " << seed << flags << duration;
-    for (int i = 0; i < height; i++)
-    {
-        for (int j = 0; j < width; j++)
-        {
-            MyFile << mask[i][j] << "\t";
-        }
-        std::cout << "\n";
-    }
-    MyFile.close();
+    draw_board(2, 2, board, mask, {0, 1});
 }
