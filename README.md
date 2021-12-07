@@ -1,5 +1,5 @@
-# CS161-Assignment
-CS161 Final Assignment: Minesweeper Clone
+# Minesawyer Game
+This is a Minesweeper clone ~~with a twist~~ made for the CS161 Final Assignment
 
 ## Group 24's student list
 - 21125062	Mai Kiến	Quốc
@@ -40,7 +40,7 @@ CS161 Final Assignment: Minesweeper Clone
 
 - Run driver
 ```sh
-~ driver <board/input>
+~ driver <board/input/...>
 ```
 
 - Cleanup all .exe and .o
