@@ -22,10 +22,10 @@ void score_draw()
         {
             std::vector<int> scores = get_scores(board_options[i][j].mines + i * OFFSET);
 
-            SetConsoleTextAttribute(h_console, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+            SetConsoleTextAttribute(h_console, BRIGHT_BLUE);
             std::cout << board_options[i][j].name << " scoreboard" << std::endl;
 
-            SetConsoleTextAttribute(h_console, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_RED);
+            SetConsoleTextAttribute(h_console, WHITE);
             for (int id = 0; id < scores.size(); id++)
                 std::cout << std::setw(2) << id + 1 << ". "
                           << format_duration(scores[id]) << std::endl;

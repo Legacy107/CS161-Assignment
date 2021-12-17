@@ -25,7 +25,7 @@ void chooser_draw(struct minesawyer *game)
     {
         std::cout << std::endl << std::endl;
         std::cout << "Minesawyer's rule:" << std::endl;
-        std::cout << "Each cell has either a mine or a number indicating the distance to the nearest mine." << std::endl;
+        std::cout << "Each cell has either a mine or a number indicating the Manhattan distance to the nearest mine." << std::endl;
         std::cout << "To win the game, you have to open all the cells that have mines inside." << std::endl;
         std::cout << "For each cell you open that does not contain a mine, a 30 seconds penalty will be applied." << std::endl;
         std::cout << "GLHF! :D" << std::endl << std::endl;

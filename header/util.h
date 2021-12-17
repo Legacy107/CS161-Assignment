@@ -13,6 +13,8 @@ std::string format_duration(int duration);
 
 void set_cursor(int x = 0, int y = 0);
 
+COORD get_cursor();
+
 void show_cursor(bool show);
 
 void util();

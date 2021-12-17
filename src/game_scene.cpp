@@ -29,7 +29,7 @@ void game_draw(struct minesawyer *game)
     std::cout << "Remaining Flags: " << std::setw(2) << game->mines - game->flags;
 
     set_cursor(0, 2);
-    draw_board(game->width, game->height, game->board, game->mask, game->cursor);
+    draw_board(game->width, game->height, game->board, game->mask, game->prev_mask, game->cursor);
 }
 
 bool game_input(struct minesawyer *game, std::map<int, bool> &prev_key_state)

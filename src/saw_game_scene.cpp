@@ -18,7 +18,7 @@ void saw_draw_instruction(struct minesawyer *game)
 {
     set_cursor(0, game->height + 5);
     std::cout << "Minesawyer's rule:" << std::endl;
-    std::cout << "Each cell has either a mine or a number indicating the distance to the nearest mine." << std::endl;
+    std::cout << "Each cell has either a mine or a number indicating the Manhattan distance to the nearest mine." << std::endl;
     std::cout << "To win the game, you have to open all the cells that have mines inside." << std::endl;
     std::cout << "For each cell you open that does not contain a mine, a 30 seconds penalty will be applied." << std::endl;
     std::cout << "GLHF! :D" << std::endl << std::endl;
@@ -34,7 +34,7 @@ void saw_game_draw(struct minesawyer *game, int remaning_mines)
     std::cout << "Remaining Mines: " << std::setw(2) << remaning_mines;
 
     set_cursor(0, 2);
-    draw_board(game->width, game->height, game->board, game->mask, game->cursor);
+    draw_board(game->width, game->height, game->board, game->mask, game->prev_mask, game->cursor);
 }
 
 bool saw_game_input(struct minesawyer *game, std::map<int, bool> &prev_key_state, int &remaning_mines)
