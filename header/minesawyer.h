@@ -13,6 +13,7 @@ struct minesawyer
     std::map<Scene, FnPtr> scenes;
     Scene current_scene = MENU;
     std::vector<std::vector<int>> board, mask;
+    std::vector<std::vector<int>> prev_mask;
     int width, height, mines, seed;
     int flags = 0;
     int mode = 0; // 0: minesweeper     1: minesawyer

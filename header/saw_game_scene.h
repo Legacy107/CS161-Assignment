@@ -24,6 +24,10 @@ void saw_game_draw(struct minesawyer *game);
 // - Open: validate and call open_cell()
 // - Flag: validate and call flag_cell()
 // - Back: change scene to MENU
-bool saw_game_input(struct minesawyer *game, std::map<int, bool> &prev_key_state);
+bool saw_game_input
+(
+	struct minesawyer *game,
+	std::map<int, bool> &prev_key_state
+);
 
 void saw_game_scene(struct minesawyer *game);

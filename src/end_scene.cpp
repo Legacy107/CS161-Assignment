@@ -10,8 +10,14 @@ void end_draw(struct minesawyer *game)
 {
     system("cls");
 
-    if (game->mode == 1 ||
-        check_win(game->flags, game->mines, game->width, game->height, game->board, game->mask))
+    if (
+        game->mode == 1
+        || check_win(
+            game->flags, game->mines,
+            game->width, game->height,
+            game->board, game->mask
+        )
+    )
     {
         int score = get_duration(game->start_time);
         int highscore = 0;
@@ -19,6 +25,8 @@ void end_draw(struct minesawyer *game)
 
         update_scoreboard(file, score);
         highscore = get_highscore(file);
+
+        game->cursor = {-1, -1};
 
         std::cout << "==========" << std::endl;
         std::cout << " You win! " << std::endl;
@@ -34,7 +42,11 @@ void end_draw(struct minesawyer *game)
     }
 
     std::cout << std::endl;
-    draw_board(game->width, game->height, game->board, game->mask);
+    draw_board(
+        game->width, game->height,
+        game->board, game->mask,
+        game->prev_mask, game->cursor
+    );
 
     std::cout << std::endl << "< Menu (M)" << std::endl;
 }
@@ -51,6 +63,13 @@ bool end_input(struct minesawyer *game)
 
 void end_scene(struct minesawyer *game)
 {
+    for (int row = 0; row < game->height; row++)
+        for (int column = 0; column < game->width; column++)
+        {
+            game->mask[row][column] = 1;
+            game->prev_mask[row][column] = -2;
+        }
+
     while (true)
     {
         end_draw(game);

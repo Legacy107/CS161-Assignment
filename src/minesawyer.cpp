@@ -32,6 +32,7 @@ void minesawyer::reset_board()
     cursor = {0, 0};
     board.clear();
     mask.clear();
+    prev_mask.clear();
 }
 
 void minesawyer::get_blank_board(int width, int height, int mines, int seed)
@@ -51,6 +52,12 @@ void minesawyer::get_blank_board(int width, int height, int mines, int seed)
     {
         std::vector<int> mask_row(width);
         mask.push_back(mask_row);
+    }
+
+    for (int i = 0; i < height; i++)
+    {
+        std::vector<int> prev_mask_row(width, -2);
+        prev_mask.push_back(prev_mask_row);
     }
 }
 

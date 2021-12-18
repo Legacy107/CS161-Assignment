@@ -10,28 +10,48 @@
 void score_draw()
 {
     const int OFFSET = 100;
-    system("cls");
     HANDLE h_console = GetStdHandle(STD_OUTPUT_HANDLE);
+
+    system("cls");
 
     std::cout << "============" << std::endl;
     std::cout << " High Score " << std::endl;
     std::cout << "============" << std::endl << std::endl;
 
     for (int i = 0; i < board_options.size(); i++)
+    {
+        set_cursor(0, 4);
+
         for (int j = 0; j < board_options[i].size(); j++)
         {
-            std::vector<int> scores = get_scores(board_options[i][j].mines + i * OFFSET);
+            std::vector<int> scores = get_scores(
+                board_options[i][j].mines + i * OFFSET
+            );
 
-            SetConsoleTextAttribute(h_console, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+            COORD console_cursor = get_cursor();
+            set_cursor(console_cursor.X + 35 * i, console_cursor.Y);
+
+            SetConsoleTextAttribute(h_console, BRIGHT_BLUE);
             std::cout << board_options[i][j].name << " scoreboard" << std::endl;
 
-            SetConsoleTextAttribute(h_console, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_RED);
-            for (int id = 0; id < scores.size(); id++)
-                std::cout << std::setw(2) << id + 1 << ". "
-                          << format_duration(scores[id]) << std::endl;
+            SetConsoleTextAttribute(h_console, WHITE);
+            for (int id = 0; id < SCORE_LIMIT; id++)
+            {
+                console_cursor = get_cursor();
+                set_cursor(console_cursor.X + 35 * i, console_cursor.Y);
+
+                std::cout << std::setw(2) << id + 1 << ". ";
+
+                if (id < scores.size())
+                    std::cout << format_duration(scores[id]);
+                std::cout << std::endl;
+            }
 
             std::cout << std::endl;
         }
+    }
+
+    set_cursor(0, 26);
     std::cout << "< Menu (M)" << std::endl;
 }
 
