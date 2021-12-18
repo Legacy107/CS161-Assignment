@@ -9,7 +9,9 @@
 int get_duration(std::chrono::steady_clock::time_point start)
 {
     auto end = std::chrono::steady_clock::now();
-    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(
+        end - start
+    );
 
     return duration.count();
 }
@@ -18,12 +20,18 @@ int get_duration(std::chrono::steady_clock::time_point start)
 std::string format_duration(int duration)
 {
     int m, s, ms;
+
     ms = duration % 1000;
     duration /= 1000;
     s = duration % 60;
     duration /= 60;
     m = duration;
-    return std::to_string(m) + "m " + std::to_string(s) + "s " + std::to_string(ms) + "ms";
+
+    return (
+        std::to_string(m) + "m "
+        + std::to_string(s) + "s "
+        + std::to_string(ms) + "ms"
+    );
 }
 
 void set_cursor(int x, int y)
@@ -50,6 +58,7 @@ void show_cursor(bool show)
     HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
     CONSOLE_CURSOR_INFO cursorInfo;
 
+    GetConsoleCursorInfo(handle, &cursorInfo);
     cursorInfo.bVisible = show;
     SetConsoleCursorInfo(handle, &cursorInfo);
 }

@@ -15,7 +15,7 @@ using namespace std;
 int main()
 {
     // Initialize
-    SetConsoleTitle("Minesawyer");
+    // SetConsoleTitle("Minesawyer");
     system("cls");
     show_cursor(false);
     struct minesawyer game;

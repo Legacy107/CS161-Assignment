@@ -25,9 +25,12 @@ void chooser_draw(struct minesawyer *game)
     {
         std::cout << std::endl << std::endl;
         std::cout << "Minesawyer's rule:" << std::endl;
-        std::cout << "Each cell has either a mine or a number indicating the Manhattan distance to the nearest mine." << std::endl;
-        std::cout << "To win the game, you have to open all the cells that have mines inside." << std::endl;
-        std::cout << "For each cell you open that does not contain a mine, a 30 seconds penalty will be applied." << std::endl;
+        std::cout << "Each cell has either a mine or a number indicating the "
+                     "Manhattan distance to the nearest mine." << std::endl;
+        std::cout << "To win the game, you have to open all the cells that "
+                     "have mines inside." << std::endl;
+        std::cout << "For each cell you open that does not contain a mine, "
+                     "a 30 seconds penalty will be applied." << std::endl;
         std::cout << "GLHF! :D" << std::endl << std::endl;
     }
 
@@ -40,11 +43,17 @@ bool chooser_input(struct minesawyer *game)
     {
         if (GetKeyState((char)('1' + i)) & 0x8000)
         {
-            game->create_board(board_options[game->mode][i].width, board_options[game->mode][i].height, board_options[game->mode][i].mines);
+            game->create_board(
+                board_options[game->mode][i].width,
+                board_options[game->mode][i].height,
+                board_options[game->mode][i].mines
+            );
+
             if (game->mode == 0)
                 game->change_scene(GAME);
             else if (game->mode == 1)
                 game->change_scene(SAW);
+
             return true;
         }
     }

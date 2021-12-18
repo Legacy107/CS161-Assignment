@@ -10,8 +10,14 @@ void end_draw(struct minesawyer *game)
 {
     system("cls");
 
-    if (game->mode == 1 ||
-        check_win(game->flags, game->mines, game->width, game->height, game->board, game->mask))
+    if (
+        game->mode == 1
+        || check_win(
+            game->flags, game->mines,
+            game->width, game->height,
+            game->board, game->mask
+        )
+    )
     {
         int score = get_duration(game->start_time);
         int highscore = 0;
@@ -36,7 +42,11 @@ void end_draw(struct minesawyer *game)
     }
 
     std::cout << std::endl;
-    draw_board(game->width, game->height, game->board, game->mask, game->prev_mask, game->cursor);
+    draw_board(
+        game->width, game->height,
+        game->board, game->mask,
+        game->prev_mask, game->cursor
+    );
 
     std::cout << std::endl << "< Menu (M)" << std::endl;
 }

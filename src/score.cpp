@@ -50,13 +50,13 @@ void update_scoreboard(int mines, int score)
 void score()
 {
     std::vector<int> scores = get_scores(10);
-    for (auto score : scores)
+    for (auto score: scores)
         std::cout << score << " ";
     std::cout << std::endl << get_highscore(10) << std::endl;
 
     update_scoreboard(10, 100);
 
     scores = get_scores(10);
-    for (auto score : scores)
+    for (auto score: scores)
         std::cout << score << " ";
 }

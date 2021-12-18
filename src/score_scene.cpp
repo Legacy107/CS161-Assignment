@@ -10,8 +10,9 @@
 void score_draw()
 {
     const int OFFSET = 100;
-    system("cls");
     HANDLE h_console = GetStdHandle(STD_OUTPUT_HANDLE);
+
+    system("cls");
 
     std::cout << "============" << std::endl;
     std::cout << " High Score " << std::endl;
@@ -20,7 +21,9 @@ void score_draw()
     for (int i = 0; i < board_options.size(); i++)
         for (int j = 0; j < board_options[i].size(); j++)
         {
-            std::vector<int> scores = get_scores(board_options[i][j].mines + i * OFFSET);
+            std::vector<int> scores = get_scores(
+                board_options[i][j].mines + i * OFFSET
+            );
 
             SetConsoleTextAttribute(h_console, BRIGHT_BLUE);
             std::cout << board_options[i][j].name << " scoreboard" << std::endl;
